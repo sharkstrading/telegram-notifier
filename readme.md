@@ -27,9 +27,9 @@ Media files can be obtained from websites like https://quicksounds.com/
 ## Running the application on a Raspberry PI
 
 ```
+# copy the config and fill in the values in config.yml
 cp config.example/config.yml config/config.yml
-# fill in the values in config.yml
-# then, set up the Python virtual environment with the correct dependencies
+# then, set up the Python virtual environment with the correct dependencies (this can take a while)
 bash ./raspi-1-setup.sh
 # then, start the app
 bash ./raspi-1-run.sh
