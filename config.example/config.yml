@@ -1,0 +1,22 @@
+---
+# the app will be started every period according to this config
+# more info: https://github.com/robdmc/crontabs
+#
+# the app will be operational between these hours according to the system time
+cronBusinessHoursStart: 0
+cronBusinessHoursEnd: 24
+# the app will be run every X seconds (within business hours)
+cronRunEverySeconds: 60
+
+telegram:
+  token: "____________"
+  # chatIDs must be integers and can be negative
+  chatIDs:
+    - 1000
+    - 1001
+
+soundFile: "___________"
+# how many times (integer) to repeat the alarm, e.g. 1
+repeatAlarm: 3
+# how long in seconds to wait before repeating the alarm
+sleepBetweenAlarms: 3

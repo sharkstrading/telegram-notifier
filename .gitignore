@@ -1,0 +1,5 @@
+output.txt
+config/*.yml
+media/*.mp3
+.idea
+*.iml
