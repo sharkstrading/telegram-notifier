@@ -2,7 +2,7 @@
 
 Telegram notifier that can be used as an alarm clock. Use this app to be awakened at a set time, but only if there are new messages.
 
-This app was made to listen on one or more channels. These channels can be listened to using the `chatId`.
+This app was made to listen on one or more channels. These channels can be listened to using the `chatId` as specified in the config file.
 
 ## Obtaining the chatId
 
@@ -16,7 +16,7 @@ How to obtain the `chatId`:
 - send a message to the bot/channel in which the bot resides
 - then, go to `https://api.telegram.org/bot<YourBOTToken>/getUpdates` and find the "id" field of the "chat" object
 - add this `chatId` to the list of chatIds in the config file
-- the `chatIds` must be added as Integers
+- the `chatIds` must be added as Integers and can be negative, e.g. `-1001671193872`
 
 ## Target system
 
