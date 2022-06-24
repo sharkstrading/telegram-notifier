@@ -29,12 +29,12 @@ allowed_updates = "channel_post"
 def period(config):
     # Grab an instance of the crontab logger and write to it.
     bot = telegram.Bot(token=str(config['telegram']['token']))
-    logger.info(f"Getting updates ...")
 
     if latest_update:
+        logger.info(f"Getting updates since updateID {latest_update.update_id} ...")
         updates = bot.get_updates(allowed_updates=allowed_updates, offset=latest_update.update_id)
-        logger.info(f"Latest update: {latest_update.update_id}")
     else:
+        logger.info(f"Getting updates ...")
         updates = bot.get_updates(allowed_updates=allowed_updates)
 
     if updates:
@@ -52,19 +52,24 @@ def handle_updates(updates, config):
 
 def handle_update(update, config):
     logger.info(f"Update found for chatID {update.effective_chat.id}. Sounding alarm ...")
-    latest_update = update
+    set_latest_update(update, latest_update)
 
     for _ in itertools.repeat(None, int(config['repeatAlarm'])):
         play_mp3(config['soundFile'])
 
         time.sleep(config['sleepBetweenAlarms'])
+        
+def set_latest_update(update, latest_update):
+    if latest_update is None or update.update_id > latest_update.update_id:
+        latest_update = update
+        logger.info(f"The latest updateID changed to {latest_update.update_id} just now")
 
 def play_mp3(filename):
     song = AudioSegment.from_mp3(filename)
     play(song)
 
 def business_hours(timestamp):
-        return cron_business_hours_start <= timestamp.hour < cron_business_hours_end
+    return cron_business_hours_start <= timestamp.hour < cron_business_hours_end
 
 # -------------------------------------------------------------------
 # sanity checks
@@ -108,7 +113,7 @@ if updates:
     # by adding an offset, previous messages will be ignored
     offset = 1
     latest_update = updates[-1]
-    logger.info(f"Latest update: {latest_update.update_id}")
+    logger.info(f"Latest update at startup time: {latest_update.update_id}")
     latest_update.update_id = latest_update.update_id + offset
 else:
     logger.info(f"Latest update: (none)")
