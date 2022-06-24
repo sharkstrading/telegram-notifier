@@ -8,6 +8,8 @@ This app was made to listen on one or more channels. These channels can be liste
 
 For this you need to create a bot with the BotFather bot, and the bot needs to be activated/whitelisted in order to be able to receive messages from it.
 
+Note: if you use a Telegram bot to send messages to the channel, the bot for this application should be a separate bot, otherwise it will not get updates.
+
 A chat needs to be set up, and the ID of the chat is the explicit whitelisting of communications between the bot and you/your channel.
  
 How to obtain the `chatId`:
