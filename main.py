@@ -52,14 +52,14 @@ def handle_updates(updates, config):
 
 def handle_update(update, config):
     logger.info(f"Update found for chatID {update.effective_chat.id}. Sounding alarm ...")
-    set_latest_update(update, latest_update)
+    set_latest_update(update)
 
     for _ in itertools.repeat(None, int(config['repeatAlarm'])):
         play_mp3(config['soundFile'])
 
         time.sleep(config['sleepBetweenAlarms'])
         
-def set_latest_update(update, latest_update):
+def set_latest_update(update):
     if latest_update is None or update.update_id > latest_update.update_id:
         latest_update = update
         logger.info(f"The latest updateID changed to {latest_update.update_id} just now")
