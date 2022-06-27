@@ -58,9 +58,14 @@ def handle_update(update, config):
         play_mp3(config['soundFile'])
 
         time.sleep(config['sleepBetweenAlarms'])
-        
+
+def get_latest_update():
+    return latest_update
+
 def set_latest_update(update):
-    if latest_update is None or update.update_id > latest_update.update_id:
+    _latest_update = get_latest_update()
+
+    if _latest_update is None or update.update_id > _latest_update.update_id:
         latest_update = update
         logger.info(f"The latest updateID changed to {latest_update.update_id} just now")
 
