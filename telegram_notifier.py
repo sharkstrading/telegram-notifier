@@ -25,7 +25,7 @@ class TelegramNotifier:
             # by adding an offset, previous messages will be ignored
             offset = 1
             self.latest_update = updates[-1]
-            self.logger.info(f"Latest update at startup time: {self.latest_update.update_id}")
+            self.logger.info(f"Latest update: {self.latest_update.update_id}")
             self.latest_update.update_id = self.latest_update.update_id + offset
         else:
             self.logger.info(f"Latest update: (none)")
