@@ -41,7 +41,7 @@ class TelegramNotifier:
 
         if updates:
             self.logger.info(f"Updates found, processing ...")
-            self.handle_updates(updates, self.config)
+            self.handle_updates(updates)
         else:
             self.logger.info(" ✅ Everything is up-to-date")
 
