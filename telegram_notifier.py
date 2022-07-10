@@ -47,7 +47,8 @@ class TelegramNotifier:
 
     def handle_updates(self, updates):
         for update in updates:
-            if hasattr(update, 'effective_chat') and hasattr(update.effective_chat, 'id') and int(update.effective_chat.id) in self.config['telegram']['chatIDs']:
+            if hasattr(update, 'effective_chat') and hasattr(update.effective_chat, 'id') and int(
+                    update.effective_chat.id) in self.config['telegram']['chatIDs']:
                 self.handle_update(update)
             else:
                 self.logger.info(f"Received invalid message, ignoring")
@@ -71,4 +72,4 @@ class TelegramNotifier:
         play(song)
 
     def __str__(self):
-        return f"{self}"
+        return f"{TelegramNotifier}"
