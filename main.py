@@ -18,12 +18,14 @@ latest_update = None
 # only inquire after these types of updates
 allowed_updates = "channel_post"
 
+
 # -------------------------------------------------------------------
 # functions
 # -------------------------------------------------------------------
 
 def business_hours(timestamp):
     return cron_business_hours_start <= timestamp.hour < cron_business_hours_end
+
 
 # -------------------------------------------------------------------
 # sanity checks
@@ -56,7 +58,8 @@ logger.info("telegram-notifier starting up ...")
 logger.info("---------------------------------------------------------------------")
 
 logger.info("")
-logger.info(f"The application will be run every {cron_run_every_seconds} seconds between {cron_business_hours_start} and {cron_business_hours_end} hours according to system time")
+logger.info(
+    f"The application will be run every {cron_run_every_seconds} seconds between {cron_business_hours_start} and {cron_business_hours_end} hours according to system time")
 logger.info("")
 
 telegram_notifier = TelegramNotifier(config)
