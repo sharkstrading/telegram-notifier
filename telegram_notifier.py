@@ -55,7 +55,9 @@ class TelegramNotifier:
 
     def handle_update(self, update):
         self.logger.info(f"Update found for chatID {update.effective_chat.id}. Sounding alarm ...")
-        self.set_latest_update(update)
+        # add +1 to the update number so the app won't be triggered again
+        # until a new message arrives
+        self.set_latest_update(update+1)
 
         for _ in itertools.repeat(None, int(self.config['repeatAlarm'])):
             self.play_mp3(self.config['soundFile'])
