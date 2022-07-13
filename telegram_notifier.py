@@ -65,7 +65,7 @@ class TelegramNotifier:
             time.sleep(self.config['sleepBetweenAlarms'])
 
     def set_latest_update(self, update, offset):
-        if self.latest_update_id is 0 or update.update_id > self.latest_update_id:
+        if self.latest_update_id == 0 or update.update_id > self.latest_update_id:
             self.latest_update_id = update + offset
             self.logger.info(f"The latest updateID changed to {self.latest_update_id} just now")
 
