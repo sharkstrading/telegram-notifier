@@ -14,7 +14,7 @@ class TelegramNotifier:
         self.allowed_updates = "channel_post"
         self.logger = Cron.get_logger()
         self.bot = telegram.Bot(token=str(config['telegram']['token']))
-        self.latest_update = None
+        self.latest_update_id = 0
         self.initialize_updates()
 
     # get the latest updates if any
@@ -24,17 +24,17 @@ class TelegramNotifier:
         if updates:
             # by adding an offset, previous messages will be ignored
             offset = 1
-            self.latest_update = updates[-1]
-            self.logger.info(f"Latest update: {self.latest_update.update_id}")
-            self.latest_update.update_id = self.latest_update.update_id + offset
+            self.latest_update_id = updates[-1].update_id
+            self.logger.info(f"Latest update: {self.latest_update_id}")
+            self.latest_update_id = self.latest_update_id + offset
         else:
             self.logger.info(f"Latest update: (none)")
 
     # run this method every period
     def period(self):
-        if self.latest_update:
-            self.logger.info(f"Getting updates since updateID {self.latest_update.update_id} ...")
-            updates = self.bot.get_updates(allowed_updates=self.allowed_updates, offset=self.latest_update.update_id)
+        if self.latest_update_id != 0:
+            self.logger.info(f"Getting updates since updateID {self.latest_update_id} ...")
+            updates = self.bot.get_updates(allowed_updates=self.allowed_updates, offset=self.latest_update_id)
         else:
             self.logger.info(f"Getting updates ...")
             updates = self.bot.get_updates(allowed_updates=self.allowed_updates)
@@ -57,17 +57,17 @@ class TelegramNotifier:
         self.logger.info(f"Update found for chatID {update.effective_chat.id}. Sounding alarm ...")
         # add +1 to the update number so the app won't be triggered again
         # until a new message arrives
-        self.set_latest_update(update+1)
+        self.set_latest_update(update, 1)
 
         for _ in itertools.repeat(None, int(self.config['repeatAlarm'])):
             self.play_mp3(self.config['soundFile'])
 
             time.sleep(self.config['sleepBetweenAlarms'])
 
-    def set_latest_update(self, update):
-        if self.latest_update is None or update.update_id > self.latest_update.update_id:
-            self.latest_update = update
-            self.logger.info(f"The latest updateID changed to {self.latest_update.update_id} just now")
+    def set_latest_update(self, update, offset):
+        if self.latest_update_id is 0 or update.update_id > self.latest_update_id:
+            self.latest_update_id = update + offset
+            self.logger.info(f"The latest updateID changed to {self.latest_update_id} just now")
 
     def play_mp3(self, filename):
         song = AudioSegment.from_mp3(filename)
