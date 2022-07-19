@@ -65,8 +65,9 @@ class TelegramNotifier:
             time.sleep(self.config['sleepBetweenAlarms'])
 
     def set_latest_update(self, update, offset):
-        if self.latest_update_id == 0 or update.update_id > self.latest_update_id:
-            self.latest_update_id = update + offset
+        update_id = update.update_id
+        if self.latest_update_id == 0 or update_id > self.latest_update_id:
+            self.latest_update_id = update_id + offset
             self.logger.info(f"The latest updateID changed to {self.latest_update_id} just now")
 
     def play_mp3(self, filename):
