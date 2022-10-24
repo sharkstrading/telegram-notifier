@@ -31,9 +31,13 @@ if config['soundFile'] is None:
     sys.exit(1)
 
 print(" ✅ Configuration OK")
+print("")
 print("Playing sound ...")
+print("")
 
 sound = Sound()
 sound.play_mp3(config['soundFile'])
 
+print("")
 print(" ✅ Done playing sound. Did you hear it?")
+print("")
