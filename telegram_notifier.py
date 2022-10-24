@@ -4,6 +4,7 @@ import itertools
 import time
 import telegram
 from crontabs import Cron
+from sound import Sound
 
 class TelegramNotifier:
     def __init__(self, config):
