@@ -3,7 +3,7 @@
 set -e
 
 sudo apt install python3 python3-pip ffmpeg
-sudo pip3 install virtualenv
+pip3 install virtualenv
 
 virtualenv venv
 source venv/bin/activate
