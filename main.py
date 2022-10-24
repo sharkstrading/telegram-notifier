@@ -5,6 +5,7 @@ import yaml
 from crontabs import Cron, Tab
 
 from telegram_notifier import TelegramNotifier
+from sound import Sound
 
 logger = Cron.get_logger()
 

@@ -4,13 +4,11 @@ import itertools
 import time
 import telegram
 from crontabs import Cron
-from pydub import AudioSegment
-from pydub.playback import play
-
 
 class TelegramNotifier:
     def __init__(self, config):
         self.config = config
+        self.sound = Sound()
         self.allowed_updates = "channel_post"
         self.logger = Cron.get_logger()
         self.bot = telegram.Bot(token=str(config['telegram']['token']))
@@ -60,7 +58,7 @@ class TelegramNotifier:
         self.set_latest_update(update, 1)
 
         for _ in itertools.repeat(None, int(self.config['repeatAlarm'])):
-            self.play_mp3(self.config['soundFile'])
+            sound.play_mp3(filename)
 
             time.sleep(self.config['sleepBetweenAlarms'])
 
@@ -69,10 +67,6 @@ class TelegramNotifier:
         if self.latest_update_id == 0 or update_id > self.latest_update_id:
             self.latest_update_id = update_id + offset
             self.logger.info(f"The latest updateID changed to {self.latest_update_id} just now")
-
-    def play_mp3(self, filename):
-        song = AudioSegment.from_mp3(filename)
-        play(song)
 
     def __str__(self):
         return f"{TelegramNotifier}"

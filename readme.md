@@ -26,6 +26,14 @@ This app was created to run on a Raspberry PI 1 with speakers/headphones connect
 
 Media files can be obtained from websites like https://quicksounds.com/
 
+## Soundcheck
+
+After creating the Virtual Env, and before running the application you can do a soundcheck as follows:
+
+```
+bash ./soundcheck.sh
+```
+
 ## Running the application on a Raspberry PI
 
 ```
