@@ -59,7 +59,7 @@ class TelegramNotifier:
         self.set_latest_update(update, 1)
 
         for _ in itertools.repeat(None, int(self.config['repeatAlarm'])):
-            sound.play_mp3(filename)
+            self.sound.play_mp3(self.config['soundFile'])
 
             time.sleep(self.config['sleepBetweenAlarms'])
 
